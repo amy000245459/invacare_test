@@ -16,12 +16,12 @@ db.once('open', async () => {
             introducer_code: 0})
     date_temp.setDate(date_temp.getDate()+1)
     for(let i =2; i < NumOfFakeDate; ++i){
-        const code = i
-        const name = RandomGenerator.Name()
-        const introducer_code = Math.floor(Math.random() * (i-1))+1
-        const registration_date = RandomGenerator.Date(date_temp)
+        await Insurer.create({code:i,
+                            name: RandomGenerator.Name(),
+                            registration_date:RandomGenerator.Date(date_temp),
+                            introducer_code: Math.floor(Math.random() * (i-1))+1
+                        })
         date_temp = registration_date
-        await Insurer.create({code,name,registration_date,introducer_code})
     }
     console.log('done.')
     process.exit()
